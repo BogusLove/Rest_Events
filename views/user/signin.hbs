@@ -1,0 +1,32 @@
+<div class="col-md-12">
+    <div class="modal-dialog" style="margin-bottom:0">
+        <div class="modal-content">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Sign In</h3>
+                    </div>
+                    <div class="panel-body" action="/signin" method="post">
+                        <form role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" placeholder="Name" type="text" name="name" id="name" placeholder="Name">
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="password" name="password" id="password" placeholder="Password">
+                                </div> 
+                                <input type="submit" value="Sign In" class="btn btn-success btn-sm" />
+                            </fieldset>
+                        </form>
+                        <br>
+                        <div class="remember-forgot">
+                        <center>
+                            <div class="row">
+                                <div>
+                                    <p>Don't have an account? <a href="/signup">Sign up</a></p>
+                                </div>
+                            </div>
+                        </center>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

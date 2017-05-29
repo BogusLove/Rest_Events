@@ -1,0 +1,105 @@
+<h1>Events</h1>
+<div class="btn-group" style="float: right; right:  250px">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="/show-opened-events">Opened</a></li>
+    <li><a href="/show-closed-events">Closed</a></li>    
+    <li><a href="/show-events-by-date">By date</a></li>    
+    <li><a href="/show-events-by-name">By name</a></li>
+    <li><a href="/show-events-by-count">By count of people</a></li>
+  </ul>
+</div>
+
+{{# if isUser}}
+    <div class="container">
+        {{# each events}}
+            <div class="span8">
+                <img src="{{ this.imagePath}}" alt="..." class="img-responsive">
+                <h1>{{this.name}}</h1>
+                <h4>Date of start: {{this.date}}</h4>
+                <p>Place: {{this.place}}</p>
+                <p>People: {{this.idOfPeople.length}}</p>
+                <p>Type: {{this.type}}</p>
+                <p>Status: {{this.status}}</p>
+                <a id="will-go" name="will-go" href="/go-on-event/{{this._id}}">
+                    <button type="button" class="btn btn-success">Will go</button>
+                </a>
+                <a id="will-not-go" name="will-not-go" href="/not-go-on-event/{{this._id}}">
+                    <button type="button" class="btn btn-primary">Will not go</button>
+                </a>
+                <a id="show-comments-form">
+                    <button type="button" class="btn btn-danger" 
+                    onclick="diplay_hide('#comments-form-{{this._id}}');return false;">Add Review</button>
+                </a>
+                <form action="/add-comment-to-event/{{this._id}}" method="post" id="comments-form-{{this._id}}" style="display: none; margin-left: 0px" > 
+                    <textarea class="form-control animated" cols="5" name="text"  id="text" placeholder="Enter your review here..." rows="2"></textarea>
+                    <input type="submit" value="Add new Comment" class="btn btn-success" />
+                </form>
+                <a id="comments" href="/show-comments-events/{{this._id}}">
+                    <button type="button" class="btn btn-warning">Show Reviews</button>
+                </a>
+                <hr>
+            </div>
+        {{/each}}
+    </div>
+{{/if}}
+
+{{# if isAdmin}}
+<div class="container">    
+    {{# each events}}
+    <div class="span8">
+        <img src="{{ this.imagePath}}" alt="..." class="img-responsive">
+        <h1>{{this.name}}</h1>
+        <h4>Date of start: {{this.date}}</h4>
+        <p>Place: {{this.place}}</p>
+        <p>People: {{this.idOfPeople.length}}</p>
+        <p>Type: {{this.type}}</p>
+        <p>Status: {{this.status}}</p> 
+        <a href="/go-on-event/{{this._id}}">
+            <button type="button" class="btn btn-success">Will go</button>
+        </a> 
+        <a href="/not-go-on-event/{{this._id}}">
+            <button type="button" class="btn btn-primary">Will not go</button>
+        </a>
+
+        <a href="/close-event/{{this._id}}">
+            <button type="button" class="btn btn-warning" onclick="diplay_hide('#people-form-{{this._id}}'); return false;">Close Event</button>
+        </a>            
+        <form action="/add-people-to-event/{{this._id}}" method="post" id="people-form-{{this._id}}" style="display: none; margin-left: 0px" >                       
+            <input type='text' class="form-control animated"  name="count"  id="count" placeholder="Enter count of people..." maxlength='5' size='6'></input>
+            <input type="submit" value="Add count of people" class="btn btn-success" />
+        </form>
+
+        <a href="/remove-event/{{this._id}}">
+            <button type="button" class="btn btn-danger">Remove</button>
+        </a>         
+        <hr>
+    </div>
+    {{/each}}
+</div>
+    <form action="/add-event" method="post">
+    <select name="place" id="place">
+        {{# each places}}
+          <option>{{this.name}}</option>
+        {{/each}}
+        </select>
+    	<input type="date" name="date" id="date" placeholder="Date" />
+     	<input type="text" name="name" id="name" placeholder="Name" />
+    	<input type="text" name="type" id="type" placeholder="Type" />
+    	<input type="text" name="image" id="image" placeholder="Image Path" /> 
+    	<input type="submit" value="Add new Event" class="btn btn-success"/>
+    </form>
+{{/if}}
+
+
+
+
+<script type="text/javascript">
+    function diplay_hide (blockId)
+    {
+        if ($(blockId).css('display') == 'none') $(blockId).animate({height: 'show'}, 200);
+        else $(blockId).animate({height: 'hide'}, 200);
+    }
+</script>

@@ -1,0 +1,69 @@
+<h1>Closed Events</h1>
+<div class="btn-group" style="float: right; right:  250px">
+  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sort <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="/show-opened-events">Opened</a></li>
+    <li><a href="/show-closed-events">Closed</a></li>    
+    <li><a href="/show-events-by-date">By date</a></li>    
+    <li><a href="/show-events-by-name">By name</a></li>
+    <li><a href="/show-events-by-count">By count of people</a></li>
+  </ul>
+</div>
+
+{{# if isUser}}
+    <div class="container">        
+        {{# each events}}
+            <div class="span8">
+                <img src="{{ this.imagePath}}" alt="..." class="img-responsive">
+                <h1>{{this.name}}</h1>    
+                <h4>Date of start: {{this.date}}</h4>
+                <p>Place: {{this.place}}</p> 
+                <p>People: {{this.countOfPeople}}</p>
+                <p>Type: {{this.type}}</p>
+                <p>Status: {{this.status}}</p>
+            </div> 
+            <a id="show-comments-form">
+                    <button type="button" class="btn btn-danger" 
+                    onclick="diplay_hide('#comments-form-{{this._id}}');return false;">Add Review</button>
+                </a>
+                    <form action="/add-comment-to-event/{{this._id}}" method="post" id="comments-form-{{this._id}}" style="display: none; margin-left: 0px" >                       
+                        <textarea class="form-control animated" cols="5" name="text"  id="text" placeholder="Enter your review here..." rows="2"></textarea>
+                        <input type="submit" value="Add new Comment" class="btn btn-success" />
+                    </form>
+                <a id="comments" href="/show-comments-events/{{this._id}}">
+                    <button type="button" class="btn btn-warning">Show Reviews</button>
+                </a>           
+            <hr>
+        {{/each}}
+    </div>
+{{/if}}
+
+{{# if isAdmin}}
+<div class="container">    
+    {{# each events}}
+    <div class="span8">
+        <img src="{{ this.imagePath}}" alt="..." class="img-responsive">
+        <h1>{{this.name}}</h1>
+        <h4>Date of start: {{this.date}}</h4>
+        <p>Place: {{this.place}}</p>        
+        <p>People: {{this.countOfPeople}}</p>
+        <p>Type: {{this.type}}</p>
+        <p>Status: {{this.status}}</p>                
+        <hr>
+    </div>
+    <a href="/remove-event/{{this._id}}">
+            <button type="button" class="btn btn-danger">Remove</button>
+        </a> 
+    {{/each}}
+</div>
+{{/if}}
+
+<script type="text/javascript">
+    function diplay_hide (blockId)
+    {
+        if ($(blockId).css('display') == 'none') $(blockId).animate({height: 'show'}, 200);
+        else $(blockId).animate({height: 'hide'}, 200);
+    }
+</script>

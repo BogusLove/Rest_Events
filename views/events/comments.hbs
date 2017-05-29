@@ -1,0 +1,26 @@
+{{# if comments}}
+    <div class="panel panel-default backcolor" >
+        <div class="panel-heading">Comments about <strong>{{title}}</strong></div>
+            <br>
+            {{# each comments}}
+                <div class="alert alert-success" role="alert"><strong>{{this.user}}</strong>: {{this.text}}</div>
+            {{/each}}
+        </div>
+    </div>
+
+{{else}}
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
+            <h2>No Reviews now</h2>
+        </div>
+    </div>
+{{/if}}
+
+
+
+
+
+
+
+
+
